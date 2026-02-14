@@ -2,7 +2,7 @@ name: Build Windows EXE
 
 on:
   push:
-    branches: [ stat ]  # Workflow срабатывает при пуше в main
+    branches: [ main ]  # Workflow срабатывает при пуше в main
 
 jobs:
   build:
