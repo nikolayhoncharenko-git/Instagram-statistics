@@ -2,30 +2,32 @@ name: Build Windows EXE
 
 on:
   push:
-    branches: [ stat ]
+    branches: [ main ]  # Workflow срабатывает при пуше в main
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
+      # 1. Клонируем репозиторий
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install Python
+      # 2. Ставим Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-          pip install pyinstaller
+      # 3. Ставим PyInstaller
+      - name: Install PyInstaller
+        run: pip install pyinstaller
 
+      # 4. Собираем exe
       - name: Build EXE
-        run: |
-          pyinstaller --onefile main.py
+        run: pyinstaller --onefile main.py
 
+      # 5. Загружаем exe как артефакт
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
